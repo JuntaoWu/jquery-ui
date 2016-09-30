@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="us">
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI Select Menu Example Page</title>
+    <link href="jquery-ui.css" rel="stylesheet">
+    <style>
+        select {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2 class="demoHeaders">Selectmenu</h2>
+
+    <select id="selectmenu">
+	<option>Slower Long text,1110</option>
+	<option>Slow,22201</option>
+	<option selected="selected">Medium</option>
+	<option>Fast</option>
+	<option>Faster</option>
+</select>
+
+    <script src="external/jquery/jquery.js"></script>
+    <script src="jquery-ui.js"></script>
+    <script>
+
+$.widget( "custom.splitselectmenu", $.ui.selectmenu, {
+    _renderItem: function(ul, item) {
+		var li = $( "<li>" ),
+			wrapper = $( "<div>", {
+				title: item.element.attr( "title" )
+			} );
+
+		if ( item.disabled ) {
+			this._addClass( li, null, "ui-state-disabled" );
+		}
+		let labels = item.label.split(",");
+		let html = `<div style="width: 60%; display: inline-block;">
+                        ${labels[0] || ""}
+                    </div>
+                    <div style="width: 30%; display: inline-block;">
+                        ${labels[1] || ""}
+                    </div>`;
+		
+        wrapper.html(html);
+
+		return li.append( wrapper ).appendTo( ul );
+	}
+});
+
+$( "#selectmenu" ).splitselectmenu();
+
+</script>
+</body>
+
+</html>
